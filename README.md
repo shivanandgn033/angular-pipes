@@ -1,59 +1,71 @@
-# AngularPureImpurePipes
+### Angular Pure Impure Pipes
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+Certainly, let's explore pure and impure pipes in Angular 19 with an example.
 
-## Development server
+#### Pure Pipes
 
-To start a local development server, run:
+Definition:
 
-```bash
-ng serve
+By default, all pipes in Angular are pure.
+Pure pipes are optimized for performance.
+They are only re-executed when the input values to the pipe change.
+If the input values remain the same, the pipe's previous output is reused.
+
+Example:
+
+TypeScript
+```typescript
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'square'
+})
+export class SquarePipe implements PipeTransform {
+  transform(value: number): number {
+    return value * value;
+  }
+}
+```
+In this example, the SquarePipe is pure. If the input value to the pipe remains the same, the pipe will not be re-executed, and the previously calculated squared value will be used.
+
+#### Impure Pipes
+
+Definition:
+
+Impure pipes are re-executed every time the component's Change Detection runs.
+They are useful when you need to:
+React to external events (e.g., timer events, HTTP requests)
+Handle asynchronous data
+Perform side effects (e.g., logging)
+Example:
+
+TypeScript
+```typescript
+import { Pipe, PipeTransform, ChangeDetectorRef } from '@angular/core';
+
+@Pipe({
+  name: 'currentTime',
+  pure: false 
+})
+export class CurrentTimePipe implements PipeTransform {
+  currentTime: Date = new Date();
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
+
+  transform(value: string): string {
+    this.currentTime = new Date();
+    this.changeDetectorRef.markForCheck(); 
+    return this.currentTime.toLocaleTimeString();
+  }
+}
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+In this example, the currentTime pipe is impure due to the pure: false flag.
 
-## Code scaffolding
+It updates the current time every time the Change Detection runs, ensuring that the displayed time is always up-to-date.
+ChangeDetectorRef.markForCheck() is necessary to trigger a change detection cycle and update the view with the new time.
+#### Key Considerations
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Use pure pipes whenever possible for optimal performance.
+Use impure pipes only when necessary, such as for handling asynchronous data or external events.
+Be mindful of the performance implications of using impure pipes, as they can impact the overall performance of your application.
