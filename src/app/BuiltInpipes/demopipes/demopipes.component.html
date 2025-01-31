@@ -1,0 +1,69 @@
+<p>demopipes works!</p>
+<br>
+<div>
+    1. DatePipe : <br>
+    <p>{{ today | date }}</p> <br>
+    <p>{{ today | date:'fullDate' }}</p> <br>
+    <p>{{ today | date:'shortTime' }}</p> <br>
+</div>
+<br>
+<div>
+    UpperCasePipe and LowerCasePipe : <br>
+    <p>{{ 'Hello World' | uppercase }}</p><br>
+    <p>{{ 'Hello World' | lowercase }}</p> <br>
+</div>
+<br>
+<div>
+    SlicePipe : <br>
+    <p>{{ 'Hello World' | slice:0:5 }}</p> <br>
+    <p>{{ 'Hello World' | slice:6:11 }}</p> <br>
+</div>
+<br>
+<div>
+    JsonPipe : <br>
+    <p>{{ { name: 'John', age: 30 } | json }}</p> <br> 
+</div>
+<br>
+<div>
+    CurrencyPipe : <br>
+    <p>{{ price | currency }}</p> <br>
+    <p>{{ price | currency:'USD':true }}</p> <br>
+    <p>{{ price | currency:'USD':false }}</p> <br>
+</div>
+<br>
+<div>
+    PercentPipe : <br>
+    <p>{{ 0.5 | percent }}</p> <br>
+    <p>{{ 0.5 | percent:'2.1-2' }}</p> <br>
+</div>
+<br>
+<div>
+    DecimalPipe : <br>
+    <p>{{ 0.5 | number }}</p> <br>
+    <p>{{ 0.5 | number:'2.1-2' }}</p> <br>
+</div>
+<br>
+<div>
+    AsyncPipe : <br>
+    <p>{{ promise | async }}</p> <br>
+</div>
+<br>
+<div>
+    KeyValuePipe : <br>
+    <ul>
+        <li *ngFor="let item of obj | keyvalue">
+            {{ item.key }} : {{ item.value }}
+        </li>
+    </ul>
+</div>
+<br>
+<div>
+    TitleCasePipe : <br>
+    <p>{{ 'hello world' | titlecase }}</p> <br>
+</div>
+<br>
+<div>
+    I18nPluralPipe : <br>
+    <p>{{ count }} {{ count | i18nPlural: { '=0': 'No messages.', '=1': 'One message.', 'other': '# messages.' } }}</p> <br>
+</div>
+<br>
